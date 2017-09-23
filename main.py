@@ -111,7 +111,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
 #tests.test_optimize(optimize)
 
 
-def train_nn(sess, epochs, batch_size, get_batches_fn,
+def train_nn(sess,  epochs, batch_size, get_batches_fn,
              train_op, cross_entropy_loss,
              input_image, correct_label, keep_prob, learning_rate):
     """
@@ -143,6 +143,11 @@ def train_nn(sess, epochs, batch_size, get_batches_fn,
             losses.append(loss_value)
             print("Loss: = {:.3f}".format(loss_value))
         print()
+
+        # keep model snapshot
+        #save_path = saver.save(sess, "/tmp/model.ckpt")
+        #print("Model saved in file: %s" % save_path)
+
     return losses
 
 #tests.test_train_nn(train_nn)
@@ -162,6 +167,7 @@ def run(epochs=5, batch_size=4):
     #  https://www.cityscapes-dataset.com/
 
     with tf.Session() as sess:
+
         # Path to vgg model
         vgg_path = os.path.join(data_dir, 'vgg')
         # Create function to get batches
@@ -177,8 +183,18 @@ def run(epochs=5, batch_size=4):
         learning_rate = tf.placeholder(tf.float32, name='learning_rate')
         logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, num_classes)
 
+        #saver = tf.train.Saver()
+        #try:
+            #saver.restore(sess, "./data/model.ckpt")
+        #except:
+            #pass
+
         # Train NN using the train_nn function
         train_losses = train_nn(sess,
+
+                                # model saver
+                                #saver,
+
                                 # hyper parameters
                                 epochs, batch_size, get_batches_fn,
 
@@ -187,7 +203,6 @@ def run(epochs=5, batch_size=4):
 
                                 # placeholders
                                 input_image, correct_label, keep_prob, learning_rate)
-
 
         # Save inference data using helper.save_inference_samples
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, input_image)
