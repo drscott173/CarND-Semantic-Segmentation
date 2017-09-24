@@ -98,7 +98,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
     # TODO: Implement function
 
     # flatten the image have 2 classes per pixel
-    logits = tf.reshape(nn_last_layer, (-1, num_classes))
+    logits = tf.reshape(nn_last_layer, (-1, num_classes), name="logits")
     correct_label = tf.reshape(correct_label, (-1, num_classes))
     cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=logits,
                                                                                 labels=correct_label))
@@ -111,7 +111,7 @@ def optimize(nn_last_layer, correct_label, learning_rate, num_classes):
 #tests.test_optimize(optimize)
 
 
-def train_nn(sess,  epochs, batch_size, get_batches_fn,
+def train_nn(sess, saver, epochs, batch_size, get_batches_fn,
              train_op, cross_entropy_loss,
              input_image, correct_label, keep_prob, learning_rate):
     """
@@ -129,15 +129,21 @@ def train_nn(sess,  epochs, batch_size, get_batches_fn,
     """
 
     losses = []
+    model_checkpoint = "./data/model.ckpt"
+#    try:
+#        saver.restore(sess, model_checkpoint)
+#        print("Model restored\n")
+#    except:
     sess.run(tf.global_variables_initializer())
+    print("Starting fresh\n")
 
     for epoch in range(epochs):
         print("EPOCH {} ...".format(epoch + 1))
         for image, label in get_batches_fn(batch_size):
             feed_dict = {input_image: image,
                          correct_label: label,
-                         keep_prob: 0.5,
-                         learning_rate: 1.0e-3}
+                         keep_prob: 0.8,
+                         learning_rate: 5.0e-6}
             _, loss_value = sess.run([train_op, cross_entropy_loss],
                                      feed_dict=feed_dict)
             losses.append(loss_value)
@@ -145,8 +151,8 @@ def train_nn(sess,  epochs, batch_size, get_batches_fn,
         print()
 
         # keep model snapshot
-        #save_path = saver.save(sess, "/tmp/model.ckpt")
-        #print("Model saved in file: %s" % save_path)
+        save_path = saver.save(sess, model_checkpoint)
+        print("Model saved in file: %s" % save_path)
 
     return losses
 
@@ -183,17 +189,13 @@ def run(epochs=5, batch_size=4):
         learning_rate = tf.placeholder(tf.float32, name='learning_rate')
         logits, train_op, cross_entropy_loss = optimize(nn_last_layer, correct_label, learning_rate, num_classes)
 
-        #saver = tf.train.Saver()
-        #try:
-            #saver.restore(sess, "./data/model.ckpt")
-        #except:
-            #pass
+        saver = tf.train.Saver()
 
         # Train NN using the train_nn function
         train_losses = train_nn(sess,
 
                                 # model saver
-                                #saver,
+                                saver,
 
                                 # hyper parameters
                                 epochs, batch_size, get_batches_fn,
