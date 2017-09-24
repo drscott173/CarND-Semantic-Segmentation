@@ -50,7 +50,6 @@ Good results:
 Not so good results:
 
 ![Alt text](newest/um_000061.png)
-![Alt text](newest/um_000061.png)
 ![Alt text](newest/um_000086.png)
-![Alt text](newest/umm_0000000.png)
-![Alt text](newest/umm_0000003.png)
+![Alt text](newest/umm_000000.png)
+![Alt text](newest/umm_000003.png)
