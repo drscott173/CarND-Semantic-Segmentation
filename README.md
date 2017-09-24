@@ -37,4 +37,20 @@ A well written README file can enhance your project and portfolio.  Develop your
 
 ## Visualization
 
+Good results:
+
+![Alt text](newest/um_000006.png)
 ![Alt text](newest/um_000010.png)
+![Alt text](newest/um_000014.png)
+![Alt text](newest/um_000015.png)
+![Alt text](newest/um_000017.png)
+![Alt text](newest/um_000032.png)
+![Alt text](newest/um_000036.png)
+
+Not so good results:
+
+![Alt text](newest/um_000061.png)
+![Alt text](newest/um_000061.png)
+![Alt text](newest/um_000086.png)
+![Alt text](newest/umm_0000000.png)
+![Alt text](newest/umm_0000003.png)
