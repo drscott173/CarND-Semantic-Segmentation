@@ -31,13 +31,16 @@ python main.py
  - `main.py`
  - `project_tests.py`
  - Newest inference images from `runs` folder
- 
- ## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
 ## Visualization
 
-Good results:
+We used a learning rate of 0.000005 and a dropout rate of 20%, training on 200 epochs with a batch size of 4. We
+trained on Google Cloud with a single NVidia P100 GPU.  We first tried training on a personal Mac, which was
+entertaining, turning my Mac into a toaster and frying pan due to the heat.  I augmented images by randomly
+adjusting contrast, brightness, then shifting the image and result in X and Y, then finally overlaying a
+synthetic shadow.  This gave us nearly an infinite training set.
+
+Hear are some decent results:
 
 ![Alt text](newest/um_000006.png)
 ![Alt text](newest/um_000010.png)
@@ -47,7 +50,7 @@ Good results:
 ![Alt text](newest/um_000032.png)
 ![Alt text](newest/um_000036.png)
 
-Not so good results:
+Here are areas we need work:
 
 ![Alt text](newest/um_000061.png)
 ![Alt text](newest/um_000086.png)
